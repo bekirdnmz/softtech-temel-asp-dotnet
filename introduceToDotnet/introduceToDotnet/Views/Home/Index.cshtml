@@ -1,0 +1,24 @@
+﻿
+@{
+    Layout = "_Layout";
+}
+
+    <p>Merhaba @ViewBag.Name</p>
+    @if (ViewBag.Hour < 12)
+    {
+        <p>Günaydın!</p>
+    }
+    else if (ViewBag.Hour < 18)
+    {
+        <p>İyi günler!</p>
+    }
+    else
+    {
+        <p>İyi akşamlar!</p>
+    }
+
+    <p>
+        Cevap için
+        <a asp-controller="Home" asp-action="Response" class="btn btn-success">tıklayınız</a>
+    </p>
+

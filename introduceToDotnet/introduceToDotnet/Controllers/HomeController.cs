@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using introduceToDotnet.Models;
+using Microsoft.AspNetCore.Mvc;
 
 namespace introduceToDotnet.Controllers
 {
@@ -14,6 +15,37 @@ namespace introduceToDotnet.Controllers
 
 
             //return "Şu anda Home/Index sayfasındasınız" ;
+            ViewBag.Name = "Türkay";
+            ViewBag.Hour = DateTime.Now.Hour;
+
+
+            return View();
+        }
+
+        public IActionResult Products()
+        {
+            var products = new List<Product>()
+            {
+                new(){Id = 1, Name = "Kalem", Price = 100},
+                new(){Id = 2, Name = "Silgi", Price = 100},
+                new(){Id = 3, Name = "Defter", Price = 100}
+            };
+
+            return View(products);
+        }
+
+        public IActionResult Response()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult Response(UserResponse userResponse)
+        {
+            if (ModelState.IsValid)
+            {
+               return View("Thanks", userResponse);
+            }
             return View();
         }
     }

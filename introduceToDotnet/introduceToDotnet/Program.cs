@@ -7,7 +7,7 @@ builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
 //gelen http isteğini, rotaya yönlendir:
-
+app.UseStaticFiles();
 app.UseRouting();
 //app.UseAuthentication();
 //app.UseAuthorization();

@@ -1,0 +1,31 @@
+﻿@model UserResponse
+@{
+    Layout = "_Layout";
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+
+
+            <form method="post">
+
+
+                <input class="form-control" asp-for="FirstName" />
+                <span class="form-control" asp-validation-for="FirstName"></span>
+                <input class="form-control" asp-for="LastName" />
+                <span class="form-control" asp-validation-for="LastName"></span>
+
+                <input class="form-control" asp-for="Email" />
+                <span class="form-control" asp-validation-for="Email"></span>
+
+                <select class="form-control" asp-for="IsApproved">
+                    <option value="True">Evet</option>
+                    <option value="False">Hayır</option>
+                </select>
+
+                <input type="submit" value="Gönder" />
+            </form>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,23 @@
+﻿@model UserResponse
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Thanks</title>
+</head>
+<body>
+    @if (Model.IsApproved)
+    {
+        <p>Teşekkürler. Görüşmek üzere</p>
+    }
+    else
+    {
+        <p>Üzgünüm. Bir dahaki sefere bekleriz.  </p>
+    }
+</body>
+</html>
