@@ -1,0 +1,9 @@
+﻿@model Product
+<div class="card">
+    <img src="@Model.ImageUrl" class="card-img-top" alt="@Model.Name">
+    <div class="card-body">
+        <h3 class="card-title">@Model.Name</h3>
+        <p>@Model.Description</p>
+        <p class="card-text">Price: @Model.Price</p>
+    </div>
+</div>
