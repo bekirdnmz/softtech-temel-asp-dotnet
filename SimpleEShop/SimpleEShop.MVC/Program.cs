@@ -1,5 +1,7 @@
+using Microsoft.EntityFrameworkCore;
 using SimpleEshop.Application.Services;
 using SimpleEshop.Domain.Contracts;
+using SimpleEshop.Infrastructure.Data;
 using SimpleEshop.Infrastructure.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -7,7 +9,14 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 builder.Services.AddScoped<IProductService, ProductService>();
-builder.Services.AddScoped<IProductRepository, FakeProductRepository>();
+builder.Services.AddScoped<IProductRepository, EFProductRepository>();
+
+builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
+builder.Services.AddScoped<ICategoryService, CategoryService>();
+
+var connectionString = builder.Configuration.GetConnectionString("db");
+
+builder.Services.AddDbContext<SimpleEshopDbContext>(options=>options.UseSqlServer(connectionString));
 
 var app = builder.Build();
 

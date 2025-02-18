@@ -22,13 +22,13 @@ namespace SimpleEshop.Application.Services
         //    _productRepository = productRepository;
         //}
 
-        public List<ProductSummaryDisplay> GetProducts()
+        public async Task<List<ProductSummaryDisplay>> GetProducts()
         {
-            var fakeProducts = _productRepository.GetAllAsync().Result;
+            var products = await _productRepository.GetAllAsync();
        
 
 
-            var summaries = fakeProducts.Select(p => new ProductSummaryDisplay()
+            var summaries = products.Select(p => new ProductSummaryDisplay()
             {
                 CategoryId = p.CategoryId,
                 Description = p.Description,
@@ -38,6 +38,21 @@ namespace SimpleEshop.Application.Services
                 Price = p.Price
             }).ToList();
             return summaries;
+        }
+
+        public async Task<List<ProductSummaryDisplay>> GetProductsByCategory(int categoryId)
+        {
+            var products = await _productRepository.GetProductsByCategoryIdAsync(categoryId);
+
+            return products.Select(p => new ProductSummaryDisplay()
+            {
+                CategoryId = p.CategoryId,
+                Description = p.Description,
+                Id = p.Id,
+                ImageUrl = p.ImageUrl,
+                Name = p.Name,
+                Price = p.Price
+            }).ToList();
         }
     }
 }

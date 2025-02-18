@@ -17,21 +17,22 @@ namespace SimpleEShop.MVC.Controllers
             this.productService = productService;
         }
 
-        public IActionResult Index(int pageNo=1)
+        public async Task<IActionResult> Index(int pageNo=1, int? category = null)
         {
             //instance almak artık HomeController'ın derdi değil.
             //var productService = new ProductService();
-            var fakeProducts = productService.GetProducts();
+            var products = category.HasValue ? await productService.GetProductsByCategory(category.Value):
+                                               await productService.GetProducts();
 
             
 
-            var totalCount = fakeProducts.Count;
+            var totalCount = products.Count;
             var itemsPerPage = 4;
 
             var startIndex = (pageNo - 1) * itemsPerPage;
             var endIndex = startIndex + itemsPerPage;
 
-            var pagedProducts = fakeProducts.Take(startIndex..endIndex).ToList();
+            var pagedProducts = products.Take(startIndex..endIndex).ToList();
 
             var totalPages = (int)Math.Ceiling((double)totalCount / itemsPerPage);
 

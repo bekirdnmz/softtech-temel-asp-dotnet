@@ -5,6 +5,8 @@ namespace SimpleEshop.Application.Services
 {
     public interface IProductService
     {
-        List<ProductSummaryDisplay> GetProducts();
+        Task<List<ProductSummaryDisplay>> GetProducts();
+
+        Task<List<ProductSummaryDisplay>> GetProductsByCategory(int categoryId);
     }
 }
