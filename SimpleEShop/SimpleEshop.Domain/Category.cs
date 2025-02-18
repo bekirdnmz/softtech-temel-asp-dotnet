@@ -1,6 +1,6 @@
 ﻿namespace SimpleEshop.Domain
 {
-    public class Category
+    public class Category : IEntity
     {
     }
 }

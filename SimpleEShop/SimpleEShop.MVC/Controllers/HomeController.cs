@@ -1,5 +1,6 @@
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
+using SimpleEshop.Application.Services;
 using SimpleEshop.Domain;
 using SimpleEShop.MVC.Models;
 
@@ -8,96 +9,42 @@ namespace SimpleEShop.MVC.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly IProductService productService;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, IProductService productService)
         {
             _logger = logger;
+            this.productService = productService;
         }
 
-        public IActionResult Index()
+        public IActionResult Index(int pageNo=1)
         {
-            var fakeProducts = new List<Product>()
+            //instance almak artık HomeController'ın derdi değil.
+            //var productService = new ProductService();
+            var fakeProducts = productService.GetProducts();
+
+            
+
+            var totalCount = fakeProducts.Count;
+            var itemsPerPage = 4;
+
+            var startIndex = (pageNo - 1) * itemsPerPage;
+            var endIndex = startIndex + itemsPerPage;
+
+            var pagedProducts = fakeProducts.Take(startIndex..endIndex).ToList();
+
+            var totalPages = (int)Math.Ceiling((double)totalCount / itemsPerPage);
+
+
+            var viewModel = new ProductListViewModel()
             {
-
-                //Fake data:
-                new Product()
-                {
-                    Id = 1,
-                    Name = "Iphone 12",
-                    Description = "Apple Iphone 12 64 GB",
-                    Price = 10000,
-                    Stock = 100,
-                    Rating = 5,
-                    CategoryId = 1,
-                    CreatedDate = DateTime.Now
-                },
-
-                new Product()
-                {
-                    Id = 2,
-                    Name = "Samsung Galaxy S21",
-                    Description = "Samsung Galaxy S21 128 GB",
-                    Price = 9000,
-                    Stock = 50,
-                    Rating = 4,
-                    CategoryId = 1,
-                    CreatedDate = DateTime.Now
-                },
-
-                new Product()
-                {
-                    Id = 3,
-                    Name = "Huawei P40",
-                    Description = "Huawei P40 128 GB",
-                    Price = 8000,
-                    Stock = 30,
-                    Rating = 3,
-                    CategoryId = 1,
-                    CreatedDate = DateTime.Now
-                },
-
-                new Product()
-                {
-                    Id = 4,
-                    Name = "Xiaomi Mi 11",
-                    Description = "Xiaomi Mi 11 128 GB",
-                    Price = 7000,
-                    Stock = 20,
-                    Rating = 2,
-                    CategoryId = 1,
-                    CreatedDate = DateTime.Now
-                },
-
-                new Product()
-                {
-                    Id = 5,
-                    Name = "Oppo Find X3",
-                    Description = "Oppo Find X3 128 GB",
-                    Price = 6000,
-                    Stock = 10,
-                    Rating = 1,
-                
-                    CategoryId = 1,
-                    CreatedDate = DateTime.Now
-                },
-
-                new Product()
-                {
-                    Id = 6,
-                    Name = "OnePlus 9",
-                    Description = "OnePlus 9 128 GB",
-                    Price = 5000,
-                    Stock = 5,
-                    Rating = 1,
-                
-                    CategoryId = 1,
-                    CreatedDate = DateTime.Now
-
-                }
-
-
+                Products = pagedProducts,
+                TotalPages = totalPages,
+                CurrentPage = pageNo
             };
-            return View(fakeProducts);
+
+            //ViewBag.TotalPages = totalPages;
+            return View(viewModel);
         }
 
         public IActionResult Privacy()

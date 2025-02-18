@@ -11,7 +11,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\SimpleEshop.Domain\SimpleEshop.Domain.csproj" />
+    <ProjectReference Include="..\SimpleEshop.Application\SimpleEshop.Application.csproj" />
+    <ProjectReference Include="..\SimpleEshop.Infrastructure\SimpleEshop.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>
