@@ -42,3 +42,17 @@
 
 
 </div>
+
+@section Scripts
+{
+    <script>
+        $(document).ready(function () {
+            $(".basket").click(function () {
+                var id = $(this).data("id");
+                $.post("/Basket/AddToBasket", { productId: id }, function (data) {
+                    console.log(data);
+                });
+            });
+        });
+    </script>
+}

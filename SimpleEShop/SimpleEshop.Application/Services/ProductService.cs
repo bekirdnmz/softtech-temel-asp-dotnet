@@ -58,6 +58,18 @@ namespace SimpleEshop.Application.Services
 
         }
 
+        public async Task<ProductForBasketItem> GetProductForBasketItem(int id)
+        {
+           var product = await _productRepository.GetAsync(id);
+            return new ProductForBasketItem()
+            {
+                Id = product.Id,
+                Name = product.Name,
+                Price = product.Price,
+                ImageUrl = product.ImageUrl
+            };
+        }
+
         //Bu uygulama, entity'ler ile ne yapılacağını belirleyen servislerden oluşacak.
         //Bu uygulamada, product varlığıyla ....... işlemleri yapılacak.
 

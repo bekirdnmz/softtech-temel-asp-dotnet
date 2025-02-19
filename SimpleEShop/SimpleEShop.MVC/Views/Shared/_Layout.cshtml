@@ -1,4 +1,8 @@
-﻿<!DOCTYPE html>
+﻿@using SimpleEShop.MVC.Extensions
+@{
+    var basketCount = (Context.Session.GetJson<ProductCardCollection>("basket"))?.GetTotalQuantity();
+}
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -23,8 +27,21 @@
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Basket" asp-action="Index">Sepet (@basketCount)</a>
                         </li>
+
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Users" asp-action="Logout">@User.Identity.Name (Çıkış)</a>
+                            </li>
+                        }
+                        else
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Users" asp-action="Login">Giriş</a>
+                            </li>                          
+                        }
                     </ul>
                 </div>
             </div>
@@ -33,7 +50,7 @@
     <div class="container">
         <div class="row">
             <div class="col-2">
-                  @await Component.InvokeAsync("Menu")    
+                @await Component.InvokeAsync("Menu")
             </div>
             <div class="col-10">
                 <main role="main" class="pb-3">
@@ -41,7 +58,7 @@
                 </main>
             </div>
         </div>
-       
+
     </div>
 
     <footer class="border-top footer text-muted">

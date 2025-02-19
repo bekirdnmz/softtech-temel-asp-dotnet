@@ -16,5 +16,7 @@ namespace SimpleEshop.Application.Services
         Task<bool> IsExists(int id);
 
         Task<ProductEditDisplay> GetProductById(int id);
+
+        Task<ProductForBasketItem> GetProductForBasketItem(int id);
     }
 }
