@@ -1,8 +1,10 @@
 ﻿@model IEnumerable<SimpleEshop.Application.DataTransferObjects.CategoryMenuDisplay>
 <ul class="list-group">
+    <a asp-action="Index" asp-controller="Home" asp-route-category="" asp-route-pageNo="1" class="list-group-item list-group-item-action">Tüm Kategoriler</a>
+
     @foreach (var category in Model)
     {
-        <a asp-action="Index" asp-controller="Home" asp-route-category="@category.Id" class="list-group-item list-group-item-action">@category.Name</a>
+        <a asp-action="Index" asp-controller="Home" asp-route-category="@category.Id" asp-route-pageNo="1" class="list-group-item list-group-item-action">@category.Name</a>
 
     }
 </ul>

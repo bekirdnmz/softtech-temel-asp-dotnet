@@ -32,6 +32,11 @@ namespace SimpleEshop.Infrastructure.Repositories
             throw new NotImplementedException();
         }
 
+        public Task<bool> IsExists(int id)
+        {
+            throw new NotImplementedException();
+        }
+
         public Task UpdateAsync(Category entity)
         {
             throw new NotImplementedException();

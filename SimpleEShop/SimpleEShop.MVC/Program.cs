@@ -31,12 +31,22 @@ app.UseRouting();
 
 app.UseAuthorization();
 
+
+app.MapControllerRoute(
+    name: "category",
+    pattern: "{category?}/Sayfa{pageNo}",
+    defaults: new { controller = "Home", action = "Index", pageNo = 1, }
+    );
+
+
 app.MapControllerRoute(
     name:"paging",
     pattern:"Sayfa{pageNo}",
     defaults: new { controller = "Home", action = "Index", pageNo=1}
 
     );
+
+
 
 app.MapControllerRoute(
     name: "default",

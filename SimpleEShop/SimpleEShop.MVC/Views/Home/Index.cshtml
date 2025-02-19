@@ -35,7 +35,7 @@
         <ul class="pagination justify-content-center">           
             @for (int i = 1; i <= Model.TotalPages; i++)
             {
-              <li class="page-item @(Model.CurrentPage==i ? "active": string.Empty) "><a class="page-link" asp-controller="Home" asp-action="Index" asp-route-pageNo="@i">@i</a></li>
+              <li class="page-item @(Model.CurrentPage==i ? "active": string.Empty) "><a class="page-link" asp-controller="Home" asp-action="Index" asp-route-pageNo="@i" asp-route-category="@(Model.CurrentCategory.HasValue ? Model.CurrentCategory.Value : null)">@i</a></li>
             }        
          </ul>
     </nav>

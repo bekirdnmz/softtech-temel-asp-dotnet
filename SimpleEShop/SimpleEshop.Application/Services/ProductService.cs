@@ -11,6 +11,53 @@ namespace SimpleEshop.Application.Services
 {
     public class ProductService(IProductRepository _productRepository) : IProductService
     {
+        public async Task<int> CreateProduct(CreateNewProduct request)
+        {
+            var productEntity = new Product()
+            {
+                CategoryId = request.CategoryId,
+                Description = request.Description,
+                ImageUrl = request.ImageUrl,
+                Name = request.Name,
+                Price = request.Price
+            };
+            await _productRepository.CreateAsync(productEntity);
+            return productEntity.Id;
+        }
+
+        public Task Edit(ProductEditDisplay editingRequest)
+        {
+            var product = new Product()
+            {
+                CategoryId = editingRequest.CategoryId,
+                Description = editingRequest.Description,
+                Id = editingRequest.Id,
+                ImageUrl = editingRequest.ImageUrl,
+                Name = editingRequest.Name,
+                Price = editingRequest.Price,
+                Stock = editingRequest.Stock
+
+            };
+
+            return _productRepository.UpdateAsync(product);
+        }
+
+        public async Task<ProductEditDisplay> GetProductById(int id)
+        {
+            var product = await _productRepository.GetAsync(id);
+            return new ProductEditDisplay()
+            {
+                CategoryId = product.CategoryId,
+                Description = product.Description,
+                Id = product.Id,
+                ImageUrl = product.ImageUrl,
+                Name = product.Name,
+                Price = product.Price,
+                Stock = product.Stock
+            };
+
+        }
+
         //Bu uygulama, entity'ler ile ne yapılacağını belirleyen servislerden oluşacak.
         //Bu uygulamada, product varlığıyla ....... işlemleri yapılacak.
 
@@ -53,6 +100,11 @@ namespace SimpleEshop.Application.Services
                 Name = p.Name,
                 Price = p.Price
             }).ToList();
+        }
+
+        public async Task<bool> IsExists(int id)
+        {
+           return await _productRepository.IsExists(id);
         }
     }
 }

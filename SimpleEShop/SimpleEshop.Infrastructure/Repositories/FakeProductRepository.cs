@@ -117,6 +117,11 @@ namespace SimpleEshop.Infrastructure.Repositories
             throw new NotImplementedException();
         }
 
+        public Task<bool> IsExists(int id)
+        {
+            throw new NotImplementedException();
+        }
+
         public Task<IEnumerable<Product>> SearchByNameAsync(string name)
         {
             throw new NotImplementedException();

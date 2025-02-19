@@ -42,6 +42,11 @@ namespace SimpleEshop.Infrastructure.Repositories
              return await dbContext.Products.Where(p => p.CategoryId == categoryId).ToListAsync();
         }
 
+        public async Task<bool> IsExists(int id)
+        {
+            return await dbContext.Products.AnyAsync(p => p.Id == id);
+        }
+
         public async Task<IEnumerable<Product>> SearchByNameAsync(string name)
         {
              return await dbContext.Products.Where(p => p.Name.Contains(name)).ToListAsync();

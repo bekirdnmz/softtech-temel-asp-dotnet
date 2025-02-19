@@ -9,5 +9,7 @@ namespace SimpleEShop.MVC.Models
         public int TotalPages { get; set; }
 
         public int CurrentPage { get; set; }
+
+        public int? CurrentCategory { get; set; }
     }
 }

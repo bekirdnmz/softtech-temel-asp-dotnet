@@ -41,7 +41,8 @@ namespace SimpleEShop.MVC.Controllers
             {
                 Products = pagedProducts,
                 TotalPages = totalPages,
-                CurrentPage = pageNo
+                CurrentPage = pageNo,
+                CurrentCategory = category
             };
 
             //ViewBag.TotalPages = totalPages;
