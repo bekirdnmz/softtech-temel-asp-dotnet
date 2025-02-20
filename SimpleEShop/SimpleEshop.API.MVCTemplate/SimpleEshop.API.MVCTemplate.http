@@ -1,0 +1,6 @@
+@SimpleEshop.API.MVCTemplate_HostAddress = http://localhost:5043
+
+GET {{SimpleEshop.API.MVCTemplate_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

@@ -1,0 +1,8 @@
+﻿
+@{
+    ViewData["Title"] = "AccessDenied";
+}
+
+<h1>Erişim Yetki problemi</h1>
+<p>Üzgünüm @User.Identity.Name bu sayfayı görme yetkiniz yok. "Ama bu haksızlık" diye düşünüyorsanız. info@@bilmemne.com adresine mail atın </p>
+<p>Bu arada @User.Claims.ToList()[3].Value Takımını desteklediğinizi biliyoruz :)</p>

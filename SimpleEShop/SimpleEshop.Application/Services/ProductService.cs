@@ -3,6 +3,7 @@ using SimpleEshop.Domain;
 using SimpleEshop.Domain.Contracts;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.Tracing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -23,6 +24,12 @@ namespace SimpleEshop.Application.Services
             };
             await _productRepository.CreateAsync(productEntity);
             return productEntity.Id;
+        }
+
+        public async Task Delete(int id)
+        {
+            await _productRepository.DeleteAsync(id);
+
         }
 
         public Task Edit(ProductEditDisplay editingRequest)
@@ -60,7 +67,7 @@ namespace SimpleEshop.Application.Services
 
         public async Task<ProductForBasketItem> GetProductForBasketItem(int id)
         {
-           var product = await _productRepository.GetAsync(id);
+            var product = await _productRepository.GetAsync(id);
             return new ProductForBasketItem()
             {
                 Id = product.Id,
@@ -84,7 +91,7 @@ namespace SimpleEshop.Application.Services
         public async Task<List<ProductSummaryDisplay>> GetProducts()
         {
             var products = await _productRepository.GetAllAsync();
-       
+
 
 
             var summaries = products.Select(p => new ProductSummaryDisplay()
@@ -116,7 +123,28 @@ namespace SimpleEshop.Application.Services
 
         public async Task<bool> IsExists(int id)
         {
-           return await _productRepository.IsExists(id);
+            return await _productRepository.IsExists(id);
+        }
+
+        public async Task<IEnumerable<ProductSummaryDisplay>> Search(string productName)
+        {
+            var products = await _productRepository.SearchByNameAsync(productName);
+            return products.Select(p => new ProductSummaryDisplay()
+            {
+                CategoryId = p.CategoryId,
+                Description = p.Description,
+                Id = p.Id,
+                ImageUrl = p.ImageUrl,
+                Name = p.Name,
+                Price = p.Price
+            });
+        }
+
+        public async Task UpdateProductPrice(int id, decimal newPrice)
+        {
+            var product = await _productRepository.GetAsync(id);
+            product.Price = newPrice;
+            await _productRepository.UpdateAsync(product);
         }
     }
 }

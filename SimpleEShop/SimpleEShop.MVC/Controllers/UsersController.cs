@@ -52,5 +52,10 @@ namespace SimpleEShop.MVC.Controllers
             await HttpContext.SignOutAsync();
             return RedirectToAction("Index", "Home");
         }
+
+        public IActionResult AccessDenied()
+        {
+            return View();
+        }
     }
 }

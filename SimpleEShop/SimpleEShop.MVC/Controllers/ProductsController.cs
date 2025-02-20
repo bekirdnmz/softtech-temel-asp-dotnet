@@ -7,7 +7,7 @@ using SimpleEshop.Domain;
 
 namespace SimpleEShop.MVC.Controllers
 {
-   
+    [Authorize(Roles = "admin,editor")]
     public class ProductsController(IProductService productService, ICategoryService categoryService) : Controller
     {
         public async Task<IActionResult> Index()
@@ -15,7 +15,7 @@ namespace SimpleEShop.MVC.Controllers
             var products = await productService.GetProducts();
             return View(products);
         }
-        [Authorize(Roles = "admin,editor")]
+      
         public async Task<IActionResult> Create()
         {
             ViewBag.Categories = await getCategoriesForSelectList();
@@ -41,7 +41,7 @@ namespace SimpleEShop.MVC.Controllers
             ViewBag.Categories = await getCategoriesForSelectList();
             return View(product);
         }
-        [Authorize(Roles = "admin,editor")]
+       
         public async Task<IActionResult> Edit(int id)
         {
             var product = await productService.GetProductById(id);

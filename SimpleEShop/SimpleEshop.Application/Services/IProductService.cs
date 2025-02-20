@@ -18,5 +18,11 @@ namespace SimpleEshop.Application.Services
         Task<ProductEditDisplay> GetProductById(int id);
 
         Task<ProductForBasketItem> GetProductForBasketItem(int id);
+
+        Task<IEnumerable<ProductSummaryDisplay>> Search(string productName);
+
+        Task Delete(int id);
+
+        Task UpdateProductPrice(int id, decimal newPrice);
     }
 }
