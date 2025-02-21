@@ -1,0 +1,6 @@
+@SimpleEshop.MinimalAPI_HostAddress = http://localhost:5198
+
+GET {{SimpleEshop.MinimalAPI_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

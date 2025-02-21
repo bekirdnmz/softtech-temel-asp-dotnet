@@ -36,6 +36,23 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                     };
                 });
 
+builder.Services.AddCors(options => options.AddPolicy("Allow", builder =>
+{
+    /*
+     * originler:
+     * 
+     * http://www.softtech.com
+     * https://www.softtech.com
+     * https://accounts.softtech.com
+     * https://www.softtech.com:655
+     */
+
+    builder.AllowAnyOrigin()
+           .AllowAnyMethod()
+           .AllowAnyHeader();
+}));
+
+builder.Services.AddMemoryCache();
 
 var app = builder.Build();
 
@@ -47,8 +64,11 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+app.UseCors("Allow");
 app.UseAuthentication();
 app.UseAuthorization();
+
+//app.Cac
 
 app.MapControllers();
 

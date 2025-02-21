@@ -1,23 +1,55 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Caching.Memory;
 using SimpleEshop.API.MVCTemplate.Filters;
 using SimpleEshop.API.MVCTemplate.Models;
 using SimpleEshop.Application.DataTransferObjects;
 using SimpleEshop.Application.Services;
+using System.Linq.Expressions;
 
 namespace SimpleEshop.API.MVCTemplate.Controllers
 {
     [Route("[controller]")]
     [ApiController]
-    public class ProductsController(IProductService productService) : ControllerBase
+    public class ProductsController(IProductService productService, IMemoryCache memoryCache) : ControllerBase
     {
+
+       // private readonly IMemoryCache memoryCache = new MemoryCache(new MemoryCacheOptions());
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IActionResult> Get()
         {
-            var products = await productService.GetProducts();
-            return Ok(products);
+
+           
+
+            //products koleksiyonunu cache'e at:
+
+           
+            List<ProductSummaryDisplay> products = new List<ProductSummaryDisplay>();
+            if (!memoryCache.TryGetValue("products",out object? result))
+            {
+                products = await productService.GetProducts();
+                memoryCache.Set("products", products, TimeSpan.FromMinutes(5));            
+            }
+
+            products = memoryCache.Get<List<ProductSummaryDisplay>>("products");
+            return Ok(products);          
+        }
+
+        [HttpGet("[action]")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        //Get Products from cache:
+        public  IActionResult GetFromCache()
+        {
+           
+            if (memoryCache.TryGetValue("products", out object? result))
+            {
+                var products = (List<ProductSummaryDisplay>)result;
+                return Ok(products);
+
+            }
+            return BadRequest();
         }
 
         [HttpGet("{id}")]
